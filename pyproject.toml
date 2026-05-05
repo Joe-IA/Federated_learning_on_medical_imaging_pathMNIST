@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "Federated_learning_on_medical_imaging_pathMNIST"
+version = "1.0.0"
+description = "Federated learning framework for classification on medical imaging (pathMNIST)"
+license = {file = "LICENSE"}
+dependencies = [
+    "flwr[simulation]>=1.28.0",
+    "torch==2.8.0",
+    "torchvision==0.23.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+
+[tool.flwr.app]
+publisher = "Jose Cerna"
+fab-format-version = 1
+flwr-version-target = "1.29.0"
+
+[tool.flwr.app.components]
+serverapp = "pytorchexample.server_app:app"
+clientapp = "pytorchexample.client_app:app"
+
+[tool.flwr.app.config]
+num-server-rounds = 200
+fraction-evaluate = 0.5
+local-epochs = 10
+learning-rate = 0.001
+batch-size = 32
